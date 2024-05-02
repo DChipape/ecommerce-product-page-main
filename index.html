@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>E-commerce product page</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html, body {
+            margin: 0; /* Remove default margin */
+            padding-top: 20px; /* Add equal padding to the left and right of the page */
+            padding-left: 20px;
+            padding-right: 20px;
+            font-family: Arial, sans-serif;
+            width: 100%;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 20px; /* Add padding to the container */
+            box-sizing: border-box;
+            margin: 5px;
+            border-radius: 6px;
+            margin-top: 10px;
+            flex-direction: row;
+            
+        }
+        .big-image, .description {
+          flex: 1;
+          align-self: flex-start;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        .image {
+          border-radius: 25%;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .description {
+            padding: 20px;
+            border-radius: 5px;
+            flex: 1;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+        .item {
+          padding: 20px 30px;
+          height: 120px;
+          display: block;
+        }
+        .add-to-cart-btn {
+          display: flex;
+          align-items: center;
+          background-color: darkorange; /* Set background color to orange */
+  padding: 10px 15px; /* Add padding to button for better appearance */
+  border: none; /* Remove border */
+  border-radius: 6px;
+  margin-right: 10px;
+  padding: 10px 15px;
+        }
+        .add-to-cart-btn span {
+          margin-left: 5px;
+          white-space: nowrap;
+        }
+        .add-to-cart-btn img {
+          margin-right: 5px; /* Adjust margin as needed */
+        }
+        .quantity {
+          padding-top: 20px;
+          margin-right: 10px;
+          align-items: center;
+          display: flex;
+          background-color: #f0f0f0; 
+          height: 40px;
+          border-radius: 6px;
+          width: 50%;
+        }
+        .quantity input {
+          -webkit-appearance: none;
+          border: none;
+          text-align: center;
+          width: 40px; /* Adjust width as needed */
+          font-size: 15px;
+          font-weight: 300;
+          background-color: #f0f0f0;
+  height: 40px; /* Match height with other elements */
+  border-radius: 6px; /* Match border-radius with other elements */
+}
+        button[class*=btn] {
+          height: 40px;
+          border-radius: 6px;
+          border: none;
+          cursor: pointer;
+          outline: 0;
+          text-align: center;
+          padding: 10px;
+          color: white;
+          width: 30%;
+        }
+        button[class*=btn]:hover {
+          opacity: 0.7;
+        }
+        .minus-btn img {
+          margin-bottom: 3px;
+        }
+        .plus-btn img {
+          margin-top: 2px;
+        }
+        button:focus, input:focus {
+          outline: 0;
+        }
+        .listitem {
+          display: flex;
+  justify-content: space-between;
+  align-items: center;
+        }
+        .total-price {
+          width: 83px;
+          padding-top: 27px;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 300;
+          display: flex;
+          flex-direction: column;
+        }
+        @media (max-width: 800px) {
+          .container {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            text-align: center;
+            margin: 6px 0;
+          }
+          .buttons {
+            margin-right: 20px;
+          }
+        }
+        .item {
+          height: auto;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #ddd; /* Light grey color for the line */
+            margin: 20px 0; /* Add margin above and below the line */
+        }
+        .big-image {
+          flex-direction: column;
+        }
+        .thumbnails {
+            display: flex;
+            justify-content: flex-start; /* Center items horizontally */
+            gap: 10px; /* Add space between thumbnails */
+            margin-top: 20px; /* Add margin to separate thumbnails from the main image */
+        }
+        .thumbnail {
+          cursor: pointer;
+        }
+        .thumbnail img {
+            max-width: 80px; /* Set max width for thumbnails */
+            height: auto;
+            border-radius: 8px;
+        }
+        .thumbnail:hover {
+          opacity: 0.6;
+        }
+        .total-price {
+          font-size: 20px; /* Adjust the font size as needed */
+          font-weight: bold; /* Make the font bold */
+        }
+        .buttons {
+          position: relative;
+          padding-top: 30px;
+          margin-right: 60px;
+        }
+        .delete-btn {
+          display: inline-block;
+          cursor: pointer;
+          width: 18px;
+          height: 17px;
+          background: ;
+        }
+        .main-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .enlarged {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+        .enlarged img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+        h4 {
+          color: darkorange;
+        }
+  .nav {
+            margin-right: 20px;
+             color: #808080;
+        }
+  .nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+.nav ul li {
+    margin-right: 20px;
+}
+ .nav ul li a {
+            text-decoration: none; /* Remove underline from anchor elements */
+             color: inherit;
+        }
+.logo img {
+            max-height: 30px;
+}
+
+.logo-nav, .icons-login {
+ display: flex; /* Ensure logo-nav and icons-login are flex containers */
+  align-items: center;
+  }
+
+.icons-login img {
+  margin-right: 30px; /* Adjust margin between icons */
+  max-width: 30px; /* Adjust the width of the icons */
+  max-height: 30px; /* Adjust the height of the icons */
+}
+.login img {
+  margin-right: 30px;
+ max-width: 30px; /* Adjust the width of the login icon */
+}
+.login {
+  margin-left: auto;
+}
+.cart-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-icon img {
+  width: 50px; /* Adjust size as needed */
+}
+.cart-wrapper {
+  overflow-y: auto;
+  max-height: 350px;
+}
+.subtotal {
+  text-align: right;
+  padding: 5%;
+}
+.checkout {
+  width: 95%;
+  text-align: center;
+  cursor: pointer;
+  background-color: darkorange;
+  font-size: large;
+  color: #fff;
+  margin: 10px auto;
+  padding: 10px 15px;
+}
+.cart-item {
+  display: grid;
+  grid-template-columns: 3fr 6fr 1fr;
+  padding: 5% 2%;
+  border-bottom: solid 1px;
+}
+.cart-item img {
+  width: 100%;
+}
+.cart-item .details {
+  padding-left: 10%;
+}
+.cart-item .price {
+  display: flex;
+  text-align: left;
+}
+.quantiti {
+  display: flex;
+}
+.whole-cart-window {
+  position: fixed;
+  top: 12vh;
+  background-color: #fff;
+  border-top: none;
+  margin-right: 2%;
+}
+.hide {
+  display: none;
+}
+.icons-login .login {
+  margin-left: auto;
+}
+
+.nav ul li a.active {
+  position: relative;
+}
+
+.nav ul li a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* Adjust the position of the line */
+  width: 100%;
+  height: 2px;
+  background-color: orange;
+}
+.lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+
+    .lightbox-image {
+      display: block;
+      margin: 0 auto;
+      max-width: 90%;
+      max-height: 90%;
+      margin-top: 5%;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+    }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: black; /* Changed navigation button color to black */
+      background-color: white; /* Changed navigation button background color to white */
+      border: none;
+      outline: none;
+      padding: 100px;
+      border-radius: 50%; /* Added border radius of 50% */
+    }
+
+    .prev-btn {
+      left: 0;
+    }
+
+    .next-btn {
+      right: 0;
+    }
+    .nav-btn img {
+      width: 30px;
+      height: 30px;
+    }
+    .non-empty::after {
+      content: '3';
+      font-size: 25px;
+      width: 25px;
+      display: inline-block;
+      text-align: center;
+      position: relative;
+      top: -20px;
+      right: 20px;
+      background-color: darkorange;
+      border-radius: 50%;
+    }
+    .price-info {
+  display: flex;
+}
+    .discounted-price {
+  font-size: 20px; /* Adjust font size as needed */
+  font-weight: bold; /* Make the font bold */
+  flex: 1;
+}
+.discount {
+  margin-left: 5px; /* Adjust spacing */
+  font-size: 14px; /* Example font size */
+  color: darkorange;
+  background-color: lightgoldenrodyellow;
+  flex: 1;
+  border-radius: 6px;
+  
+}
+
+.original-price {
+   margin-left: 5px; 
+  font-size: 14px; 
+  text-decoration: line-through; 
+  color: #808080;
+}
+
+    </style>
+
+  </head>
+  <body>
+    <header>
+      <div class="logo-nav">
+      <div class="logo" style="margin-right: 20px;">
+          <img src="images/logo.svg" alt="Sneakers logo">
+      </div>
+      <nav class="nav">
+          <ul>
+              <li><a href="#home">Collections</a></li>
+              <li><a href="#men">Men</a></li>
+              <li><a href="#Women" class="active">Women</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+          </ul>
+      </nav>
+    </div>
+    
+      <div class="icons-login">
+        <div id="cartIcon" class="icons-login" onclick="showCart()">
+          <div class="cart-icon">
+            <img class="non-empty" src="images/icon-cart.svg" alt="cart">
+            <div class="whole-cart-window hide">
+              <h2>Cart</h2>
+              <div class="cart-wrapper">
+                <div class="cart-item">
+                  <img src="images/image-product-1-thumbnail.jpg">
+                  <div class="details">
+                    <p>Fall Limited Edition Sneakers</p>
+                    <span class="price">$125.00</span>
+                    <span class="quantiti">1</span>
+                    <span class="subtotal">$0.00</span>
+                  </div>
+                  <div class="cancel">
+                    <img src="images/icon-delete.svg">
+                  </div>
+                </div>
+              </div>
+              <div class="checkout">Checkout</div>
+            </div>
+          </div>
+          <div class="login">
+            <a href="#login"><img src="images/image-avatar.png" alt="Login"></a>
+          </div>
+    </div>
+    </div>
+  </header>
+  <hr>
+    <div class="container">
+      <div class="big-image">
+        <div class="image-content">
+          <img class="main-image" id="mainImage" src="images/image-product-1.jpg" alt="Sneakers" width="150">
+        </div>
+        <div class="thumbnails">
+          <div class="thumbnail" onclick="showLightbox('images/image-product-1.jpg')" onmouseover="changeMainImage(0)" onmouseout="hideEnlargedImage()">
+            <img src="images/image-product-1-thumbnail.jpg" alt="Thumbnail 1">
+        </div>
+          <div class="thumbnail" onclick="showLightbox('images/image-product-2.jpg')" onmouseover="changeMainImage(1)" onmouseout="hideEnlargedImage()">
+              <img src="images/image-product-2-thumbnail.jpg" alt="Thumbnail 2">
+          </div>
+          <div class="thumbnail" onclick="showLightbox('images/image-product-3.jpg')" onmouseover="changeMainImage(2)" onmouseout="hideEnlargedImage()">
+              <img src="images/image-product-3-thumbnail.jpg" alt="Thumbnail 3">
+          </div>
+          <div class="thumbnail" onclick="showLightbox('images/image-product-4.jpg')" onmouseover="changeMainImage(3)" onmouseout="hideEnlargedImage()">
+            <img src="images/image-product-4-thumbnail.jpg" alt="Thumbnail 4">
+        </div>
+      </div>
+    </div>
+
+      <div class="description">
+        <div class="sneaker-des">
+        <h4>SNEAKER COMPANY</h4>
+        <h2>Fall Limited Edition <br> Sneakers</h2> 
+        <br>
+        <span>This low-profile sneakers are your perfect casual wear <br> 
+          companion. Featuring a durable rubber outer sole, they'll <br> 
+          withstand everything the weather can offer.</span>
+        </div>
+          <div class="item">
+            <div class="total-price" id="totalPrice">
+              <div class="price-info">
+                <div class="discount-price">$125.00</div>
+                <div class="discount">50%</div>
+              </div>
+              <div class="original-price">$250.00</div>
+            </div>
+            <div class="listitem">
+            <div class="quantity">
+              <button class="minus-btn" type="button" name="button" onclick="decrementQuantity()">
+                <img src="images/icon-minus.svg" alt="" />
+              </button>
+              <input id="quantityInput" type="text" name="name" value="1"  readonly>
+              <button class="plus-btn" type="button" name="button" onclick="incrementQuantity()">
+                <img src="images/icon-plus.svg" alt="" />
+              </button>
+            </div>
+            <button class="add-to-cart-btn" type="button">
+              <img src="images/icon-cart.svg" alt="Cart Icon">
+              <span>Add to cart</span>
+            </button>
+          </div>
+    </div>
+  </div>
+
+<script>
+  var currentImageIndex = 0;
+  var imageSources = [
+  'images/image-product-1.jpg',
+  'images/image-product-2.jpg',
+  'images/image-product-3.jpg',
+  'images/image-product-4.jpg'
+];
+
+function changeMainImage(imageSrc) {
+    var mainImage = document.getElementById('mainImage');
+      mainImage.src = imageSrc;
+    }
+
+function hideEnlargedImage() {
+  var mainImage = document.querySelector('.main-image');
+      mainImage.classList.remove('enlarged');
+    }
+
+function incrementQuantity() {
+  var quantityInput = document.getElementById('quantityInput');
+  var quantity = parseInt(quantityInput.value);
+  quantityInput.value = quantity + 1;
+  updatePrices(quantity + 1);
+}
+
+function decrementQuantity() {
+  var quantityInput = document.getElementById('quantityInput');
+  var quantity = parseInt(quantityInput.value);
+  if (quantity > 1) {
+    quantityInput.value = quantity - 1;
+    updatePrices(quantity - 1);
+  }
+}
+function updatePrices(quantity) {
+  updateTotalPrice(quantity);
+  updateCartContent();
+}
+
+function updateTotalPrice(quantity) {
+  var totalPriceElement = document.getElementById('totalPrice');
+  var totalPrice = quantity * 125.00; // Assuming each item costs $125.00
+  totalPriceElement.textContent = '$' + totalPrice.toFixed(2);
+
+  var discountPriceElement = document.getElementById('discountPrice');
+  var originalPriceElement = document.getElementById('originalPrice');
+
+  // Assuming 50% discount
+  var discountedPrice = totalPrice * 0.5;
+  discountPriceElement.textContent = '$' + discountedPrice.toFixed(2);
+
+  // Original price is $250.00
+  var originalPrice = 250.00;
+  originalPriceElement.textContent = '$' + originalPrice.toFixed(2);
+}
+var cartItems = []; // Array to store items in the cart
+
+function updateCartContent() {
+  var cartContent = document.querySelector('.cart-content');
+  cartContent.innerHTML = ''; // Clear previous content
+
+  if (cartItems.length === 0) {
+    // Cart is empty
+    cartContent.textContent = 'Your cart is empty.';
+  } else {
+    // Cart has items
+    cartItems.forEach(function(item) {
+      // Create a new list item for each cart item
+      var listItem = document.createElement('li');
+      listItem.textContent = item.name + ' - $' + item.price + ' x ' + item.quantity;
+      cartContent.appendChild(listItem);
+    });
+  }
+}
+
+function toggleCart() {
+  var cartContent = document.querySelector('.cart-content');
+  if (cartContent.classList.contains('visible')) {
+    cartContent.classList.remove('visible');
+  } else {
+    cartContent.classList.add('visible');
+    updateCartContent(); // Update cart content when cart is opened
+  }
+}
+
+function addToCart() {
+      // Sample logic to add item to the cart
+      var newItem = {
+        name: "Sample Item",
+        price: 10,
+        quantity: 1
+      };
+      cartItems.push(newItem);
+      updateCartIconClass(); // Update cart icon class after adding item
+    }
+
+// Function to update the cart icon count
+function updateCartIconClass() {
+      var cartIcon = document.getElementById('cartIcon');
+      if (cartItems.length > 0) {
+        cartIcon.classList.add('non-empty');
+      } else {
+        cartIcon.classList.remove('non-empty');
+      }
+    }
+
+document.querySelector('.add-to-cart-btn').addEventListener('click', addToCart);
+document.getElementById('cartIcon').addEventListener('click', toggleCart);
+
+// Function to display the cart modal
+function showCart() {
+  var wholeCartWindow = document.querySelector('.whole-cart-window');
+  wholeCartWindow.classList.remove('hide'); // Remove the hide class to show the window
+}
+
+function closeCartModal() {
+  var wholeCartWindow = document.querySelector('.whole-cart-window');
+  wholeCartWindow.classList.add('hide'); // Add the hide class to hide the window
+}
+function changeMainImage(index) {
+      var mainImage = document.getElementById('mainImage');
+      mainImage.src = imageSources[index];
+    }
+function prevImage() {
+  currentImageIndex = (currentImageIndex - 1 + imageSources.length) % imageSources.length;
+      changeMainImage(imageSources[currentImageIndex]);
+    }
+
+function nextImage() {
+  currentImageIndex = (currentImageIndex + 1) % imageSources.length;
+      changeMainImage(imageSources[currentImageIndex]);
+    }
+    function showLightbox(imageSrc) {
+      var lightbox = document.querySelector('.lightbox');
+      var lightboxImage = document.querySelector('.lightbox-image');
+
+      imageIndex = imageSources.indexOf(imageSrc);
+      lightboxImage.src = imageSrc;
+      lightbox.style.display = 'block';
+    }
+
+    function closeLightbox() {
+      var lightbox = document.querySelector('.lightbox');
+      lightbox.style.display = 'none';
+    }
+    function showNextImage() {
+      imageIndex = (imageIndex + 1) % imageSources.length;
+      document.querySelector('.lightbox-image').src = imageSources[imageIndex];
+    }
+
+    function showPreviousImage() {
+      imageIndex = (imageIndex - 1 + imageSources.length) % imageSources.length;
+      document.querySelector('.lightbox-image').src = imageSources[imageIndex];
+    }
+</script>
+    
+<div class="lightbox" onclick="closeLightbox()">
+  <span class="close-btn" onclick="closeLightbox()">&times;</span>
+  <button class="nav-btn prev-btn" onclick="showPreviousImage()"><img src="images/icon-previous.svg" alt="Previous"></button>
+  <button class="nav-btn next-btn" onclick="showNextImage()"><img src="images/icon-next.svg" alt="Next"></button>
+  <img class="lightbox-image" src="" alt="Lightbox Image">
+</div>
+  </body>
+</html>
